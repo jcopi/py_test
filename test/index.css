@@ -1,0 +1,92 @@
+body, html {
+	height:100%; width:100%;
+	margin:0; padding:0;
+	overflow:hidden;
+	background:linear-gradient(45deg, #E3F2FD, #ECEFF1, #FFF);
+	text-align:center;
+}
+
+h1 {
+	height:64px;width:100%;
+	margin:0; padding:12px 20px;
+	display:block; box-sizing:border-box;
+	background-color:#FFF; box-shadow:0 2px 3px rgba(0,0,0, 0.3);
+	font:bold 28px/40px "Roboto", "Verdana", sans-serif;
+	color:rgba(0,0,0, 0.8); text-transform:uppercase;
+}
+
+#status {
+
+}
+
+.card {
+	width:800px; max-width:100%;
+	max-height:600px; height:calc(100% - 72px); min-height:400px;
+	display:inline-block; box-sizing:border-box;
+	border-radius:2px; box-shadow:0 2px 3px rgba(0,0,0, 0.3);
+	background-color:#FFF;
+	padding:12px 24px; margin:36px 0 0 0;
+	overflow:hidden;
+	position:relative;
+	font-size:0; text-align:left;
+}
+
+.card.collapsed {
+	height:60px; min-height:60px;
+}
+.card .title {
+	height:36px; width:auto;
+	display:block; box-sizing:border-box;
+	padding:6px 0px; margin-bottom:12px;
+	font:bold 16px/24px "Roboto", "Verdana", sans-serif;
+	color:#808080;
+}
+.card .size_change {
+	height:36px; width:36px;
+	display:inline-block; box-sizing:border-box;
+	position:absolute; top:12px; right:12px;
+	padding:6px; font:normal 24px/24px "Material Icons";
+	color:#808080; border-radius:50%;
+}
+.card .size_change:hover {
+	background-color:rgba(0,0,0, 0.05);
+	cursor:pointer;
+}
+.card .line {
+	height:1px; width:100%;
+	display:block; background-color:rgba(0,0,0, 0.2);
+	margin-bottom:24px;
+}
+.card .column {
+	width:50%; height:auto;
+	display:inline-block; box-sizing:border-box;
+	vertical-align:top;
+}
+.card .graph {
+	height:180px; width:calc(100% - 12px);
+	display:inline-block; box-sizing:border-box;
+	padding:0; margin:0 0 0 12px;
+	position:relative;
+}
+.card .graph_hh {
+	height:2px; width:10px;
+	display:none;
+	background-color:#1565C0;
+	box-shadow:0 0 5px #2196F3;
+	position:absolute; top:0; left:0;
+}
+.card .graph_hl {
+	height:2px; width:10px;
+	display:none;
+	background-color:#1565C0;
+	box-shadow:0 0 5px #2196F3;
+	position:absolute; bottom:0; left:0;
+}
+.card .graph_v {
+	height:100%; width:3px;
+	display:none;
+	position:absolute; top:0;
+	background-color:#1565C0;
+	box-shadow:0 0 5px #2196F3;
+}
+

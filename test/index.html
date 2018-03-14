@@ -4,10 +4,11 @@
 	<meta charset="utf-8"/>
 	<title>Endurance Test</title>
 	<link rel="stylesheet" href="../css/elements.css"/>
+	<link rel="stylesheet" href="index.css"/>
 </head>
 <body>
 	<h1>Endurance Test</h1>
-	<div id="not_running">
+	<!--<div id="not_running">
 		<div class="ul-input-wrapper" style="width:200px;">
 			<input type="text" id="on_time"/>
 			<span>On Time</span>
@@ -28,41 +29,40 @@
 		<button type="submit" id="pause">Pause Test</button>
 		<button type="submit" id="unpause">Unpause Test</button>
 		<button type="submit" id="stop">Stop Test</button>
+	</div>-->
+	<div class="card">
+		<div class="title">Settings</div>
+		<div class="size_change material-icon">keyboard_arrow_up</div>
+		<div class="line"></div>
+		<div class="column">
+			<div class="ul-input-wrapper">
+				<input type="text" id="on_time"/>
+				<span>On Time</span>
+			</div>
+			<div class="ul-input-wrapper">
+				<input type="text" id="off_time"/>
+				<span>Off Time</span>
+			</div><br/>
+			<div class="ul-input-wrapper">
+				<input type="text" id="total_cycles"/>
+				<span>Number of Cycles</span>
+			</div>
+		</div><div class="column">
+			<div class="graph">
+				<div class="graph_v"></div>
+				<div class="graph_hh"></div>
+				<div class="graph_v"></div>
+				<div class="graph_hl"></div>
+			</div>
+		</div>
+	</div><br/>
+	<div class="card collapsed">
+		<div class="title">Status</div>
+		<div class="size_change material-icon">keyboard_arrow_down</div>
+		<div class="line"></div>
 	</div>
 	<script src="../js/lib-verbose.js"></script>
 	<script src="../js/elements.js"></script>
-	<script>
-		function setRunning () {
-			_("#running").css({"display":"block"});
-			_("#not_running").css({"display":"none"});
-		}
-
-		function setNotRunning () {
-			_("#running").css({"display":"none"});
-			_("#not_running").css({"display":"block"});
-		}
-
-		function requestInfo () {
-			_.xhr("post", "info", function (data) {
-				var obj;
-				try {
-					obj = JSON.parse(data);
-					TestData = obj;
-					updateUI();
-					errorCount = 0;
-				} catch (ex) {
-					errorCount++;
-				}
-			});
-		}
-
-		function updateUI ()
-		{
-			return;
-		}
-
-		var TestData = {};
-		var errorCount = 0;
-	</script>
+	<script src="index.js"></script>
 </body>
 </html>
