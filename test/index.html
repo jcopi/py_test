@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+	<h1>Endurance Test</h1>
+	<div id="not_running">
+		<label for="on_time">On Time</label>
+		<input type="number" id="on_time"></br>
+		<label for="off_time">Off Time</label>
+		<input type="number" id="off_time"></br>
+		<label for="total_cycles">Number of Cycles</label>
+		<input type="number" id="total_cycles"></br>
+		<button type="submit" id="start">Start Test</button>
+	</div>
+	<div id="running" style="display:none">
+		Cycles: <span id="cycle_count"></span> / <span id="toal_cycles2"></span></br>
+		State:  <span id="state"></span>
+		<button type="submit" id="pause">Pause Test</button>
+		<button type="submit" id="unpause">Unpause Test</button>
+		<button type="submit" id="stop">Stop Test</button>
+	</div>
+	<script>
+		function setRunning () {
+			
+		}
+	</script>
+</body>
+</html>
