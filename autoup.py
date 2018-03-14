@@ -37,31 +37,31 @@ class Req(SimpleHTTPRequestHandler):
         elif self.path.endswith("start"):
             try:
                 schd.start_test()
-                output = gen_success()
+                output = gen_success
             except Exception as e:
                 print(e)
         elif self.path.endswith("stop"):
             try:
                 schd.stop_test()
-                output = gen_success()
+                output = gen_success
             except Exception as e:
                 print(e)
         elif self.path.endswith("pause"):
             try:
                 schd.pause_test()
-                output = gen_success()
+                output = gen_success
             except Exception as e:
                 print(e)
         elif self.path.endswith("unpause"):
             try:
                 schd.unpause_test()
-                output = gen_success()
+                output = gen_success
             except Exception as e:
                 print(e)
         elif self.path.endswith("debug"):
             try:
                 testing.debug(content.decode())
-                output = gen_success()
+                output = gen_success
             except Exception as e:
                 print(e)
         
@@ -98,8 +98,8 @@ if __name__ == '__main__':
     print(config.get("test_name") + " Test loaded")
 
     schd = Scheduler()
-    schd.set_test(testing.Test)
     schd.start()
+    schd.set_test(testing.Test)
 
     httpd = HTTPServer(('', 80), Req)
     httpd.serve_forever()

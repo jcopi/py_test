@@ -28,11 +28,11 @@ class Scheduler(object):
 
     def start(self):
         self.child_thread = threading.Thread(target=self._run)
+        self.child_thread.start()
 
     def set_test(self, test_class):
         self.test = test_class
         self.test_inst = test_class()
-        self.test_data = test_inst.push_data()
         self.test_added.set()
 
     def set_data(self, data):
@@ -40,8 +40,9 @@ class Scheduler(object):
         self.test_data = data
         self.data_lock.release()
         self.data_changed.set()
+        print("Data Changed: ", self.data_changed.is_set())
 
-    def get_data(self, data):
+    def get_data(self):
         # This is only reading data so it should be thread safe
         # It cannot alter the data present for the test
         return self.test_inst.push_data()
@@ -70,12 +71,21 @@ class Scheduler(object):
         self.test_added.clear()
 
         while True:
-            self.test_started.wait()
+            while not self.test_started.is_set():
+                if self.data_changed.is_set():
+                    self.data_lock.acquire()
+                    self.test_inst.set_data(self.test_data)
+                    self.data_lock.release()
+                    self.data_changed.clear()
+                time.sleep(0.01)
+            print("Test Started")
             self.test_started.clear()
             self.flag_lock.acquire()
             self.flag_running = True
             self.flag_lock.release()
 
+            self.test_inst.initialize()
+ 
             last_t = time.time()
             while not self.test_inst.is_finished():
                 self.test_inst.execute(time.time() - last_t)
@@ -83,7 +93,7 @@ class Scheduler(object):
 
                 if self.data_changed.is_set():
                     self.data_lock.acquire()
-                    test_inst.set_data(self.test_data)
+                    self.test_inst.set_data(self.test_data)
                     self.data_lock.release()
                     self.data_changed.clear()
                 if self.test_stopped.is_set():
