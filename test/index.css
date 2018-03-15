@@ -156,6 +156,9 @@ h1 {
 	font:bold 16px/24px "Roboto", "Verdana", sans-serif;
 	color:#808080;
 }
+.card .label.pl24 {
+	padding-left:24px;
+}
 #eta {
 	height:auto; width:100%;display:inline-block;
 	padding:6px 0 6px 24px;
