@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="index.css"/>
 </head>
 <body>
-	<h1>Endurance Test</h1>
+	<h1>UL Codes Endurance Test Station<br/>2018-03-23</h1>
 	<!--<div id="not_running">
 		<div class="ul-input-wrapper" style="width:200px;">
 			<input type="text" id="on_time"/>
@@ -78,11 +78,16 @@
 			<div class="progress">
 				<div class="progress_bar" id="c_prog"></div>
 			</div>
-		</div><div class="column">
+		</div><div class="column" style="padding-left:24px;">
 			<div class="big_number" id="t_prec">---</div>
-			<div class="small_number" id="t_frac">---</div>
+			<div class="small_number" id="t_frac">
+				<div class="item" id="t_frac_top">--</div>
+				<div class="divide">--</div>
+				<div class="item" id="t_frac_bot">--</div>
+			</div>
+			<div class="label">ETA</div>
+			<div id="eta"></div>
 		</div>
-		<div id="eta"></div>
 		<div class="actions">
 			<div class="button disabled" id="stop">Stop</div>
 			<!--<div class="button disabled" id="pause">Pause</div>

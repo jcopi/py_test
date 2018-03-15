@@ -211,7 +211,8 @@ window.setInterval(function () {
 var c_prog = _("#c_prog");
 var t_prog = _("#t_prog");
 var t_prec = _("#t_prec");
-var t_frac = _("#t_frac");
+var t_frac_top = _("#t_frac_top");
+var t_frac_bot = _("#t_frac_bot");
 var stop_btn = _("#stop");
 var eta_el = _("#eta");
 var previous_run = false;
@@ -225,7 +226,8 @@ function updateBars ()
 			c_prog.css("width", "0%");
 			t_prog.css("width", "0%");
 			t_prec.html("---");
-			t_frac.html("-- / --");
+			t_frac_top.html("--");
+			t_frac_bot.html("--");
 			stop_btn.addClass("disabled");
 			eta_el.html("");
 		} else if (currentData.running === true) {
@@ -256,7 +258,8 @@ function updateText ()
 			c_prog.css("width", "0%");
 			t_prog.css("width", "0%");
 			t_prec.html("---");
-			t_frac.html("-- / --");
+			t_frac_top.html("--");
+			t_frac_bot.html("--");
 			stop_btn.addClass("disabled");
 			eta_el.html("");
 		} else if (currentData.running === true) {
@@ -265,7 +268,8 @@ function updateText ()
 			let t_precent = Math.round((currentData.cycle_count / currentData.total_cycles) * 100);
 				
 			t_prec.html(t_precent.toString() + "%");
-			t_frac.html(currentData.cycle_count.toString() + " / " + currentData.total_cycles.toString());
+			t_frac_top.html(currentData.cycle_count.toString());
+			t_frac_bot.html(currentData.total_cycles.toString());
 			previous_run = true;
 		}
 	}
