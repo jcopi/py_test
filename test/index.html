@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Endurance Test</title>
 	<link rel="stylesheet" href="../css/elements.css"/>
 	<link rel="stylesheet" href="index.css"/>
@@ -53,6 +54,8 @@
 				<span style="float:left">
 					<div class="button mr" id="def55">Use 5 and 5</div>
 					<div class="button mr" id="def19">Use 1 and 9</div>
+					<div class="button mr" id="debon">Relay On</div>
+					<div class="button mr" id="deboff">Relay Off</div>
 				</span>
 			</div>
 		</div><div class="column">
@@ -79,10 +82,11 @@
 			<div class="big_number" id="t_prec">---</div>
 			<div class="small_number" id="t_frac">---</div>
 		</div>
+		<div id="eta"></div>
 		<div class="actions">
 			<div class="button disabled" id="stop">Stop</div>
-			<div class="button disabled" id="stop">Pause</div>
-			<div class="button disabled" id="stop">Unpause</div>
+			<!--<div class="button disabled" id="pause">Pause</div>
+			<div class="button disabled" id="unpause">Unpause</div>-->
 		</div>
 	</div>
 	<script src="../js/lib-verbose.js"></script>

@@ -15,6 +15,8 @@ class Test(object):
     def initialize(self):
         self.cycle_count = 0
         self.current_time = 0
+        self.state = True
+        automationhat.relay[self.relay_number].on()
 
     def execute(self, delta_t):
         self.current_time += delta_t
@@ -37,6 +39,7 @@ class Test(object):
     
     def end(self):
         self.cycle_count = 0
+        self.state = False
         automationhat.relay[self.relay_number].off()
 
     def set_data(self, data):

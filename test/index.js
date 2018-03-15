@@ -3,6 +3,7 @@ var currentSettings = {
 };
 
 var currentData = {};
+var currentDataChanged = 0;
 
 _(".card .size_change").on("click", function () {
 	_(".card").toggleClass("collapsed").each(function (el) {
@@ -78,7 +79,7 @@ _("#def19").on("click", function () {
 	el.focus();
 	el.blur();
 });
-_("#commit").on("click", function () {});
+//_("#commit").on("click", function () {});
 _("#start").on("click", function () {
 	if (_(this).hasClass("disabled"))
 		return;
@@ -98,6 +99,87 @@ _("#start").on("click", function () {
 			
 		}, JSON.stringify(currentSettings));	
 	}
+});
+_("#stop").on("click", function () {
+	if (_(this).hasClass("disabled"))
+		return;
+		
+	_.xhr("post", "stop", function (data) {
+		try {
+			var obj = JSON.parse(data);
+			if (obj.success === false) {
+				alert("Error: " + obj.error);
+			}
+		} catch (ex) {
+			alert("Error: improper data from raspberry pi");
+		}
+		
+	});	
+});
+
+_("#debon").on("click", function () {
+	if (_(this).hasClass("disabled"))
+		return;
+		
+	_.xhr("post", "debug", function (data) {
+		try {
+			var obj = JSON.parse(data);
+			if (obj.success === false) {
+				alert("Error: " + obj.error);
+			}
+		} catch (ex) {
+			alert("Error: improper data from raspberry pi");
+		}
+		
+	}, "relayon");	
+});
+_("#deboff").on("click", function () {
+	if (_(this).hasClass("disabled"))
+		return;
+		
+	_.xhr("post", "debug", function (data) {
+		try {
+			var obj = JSON.parse(data);
+			if (obj.success === false) {
+				alert("Error: " + obj.error);
+			}
+		} catch (ex) {
+			alert("Error: improper data from raspberry pi");
+		}
+		
+	}, "relayoff");	
+});
+
+_("#pause").on("click", function () {
+	if (_(this).hasClass("disabled"))
+		return;
+		
+	_.xhr("post", "pause", function (data) {
+		try {
+			var obj = JSON.parse(data);
+			if (obj.success === false) {
+				alert("Error: " + obj.error);
+			}
+		} catch (ex) {
+			alert("Error: improper data from raspberry pi");
+		}
+		
+	});	
+});
+_("#unpause").on("click", function () {
+	if (_(this).hasClass("disabled"))
+		return;
+	_.xhr("post", "unpause", function (data) {
+		try {
+			var obj = JSON.parse(data);
+			if (obj.success === false) {
+				alert("Error: " + obj.error);
+			}
+		} catch (ex) {
+			alert("Error: improper data from raspberry pi");
+		}
+		
+	});	
 });
 
 function handleStartResult(result) {
@@ -124,9 +206,95 @@ window.setInterval(function () {
 			console.log("Malformed Data", info);
 		}
 	});
-}, 250);
+}, 300);
 
-window.setTimeout(function () {
+var c_prog = _("#c_prog");
+var t_prog = _("#t_prog");
+var t_prec = _("#t_prec");
+var t_frac = _("#t_frac");
+var stop_btn = _("#stop");
+var eta_el = _("#eta");
+var previous_run = false;
+var rest_frame_count = 0;
+
+function updateBars ()
+{
+	if (currentDataChanged != 0) {
+		if (currentData.running === false && previous_run === true) {
+			previous_run = false;
+			c_prog.css("width", "0%");
+			t_prog.css("width", "0%");
+			t_prec.html("---");
+			t_frac.html("-- / --");
+			stop_btn.addClass("disabled");
+			eta_el.html("");
+		} else if (currentData.running === true) {
+			if (previous_run === false)
+				stop_btn.dropClass("disabled");
+			let c_width = 0;
+			if (currentData.state === true) {
+				c_width = (((currentData.current_time + ((Date.now() - currentDataChanged) / 1000)) / currentData.on_time) * 100);
+			} else {
+				c_width = 100 - (((currentData.current_time + ((Date.now() - currentDataChanged) / 1000)) / currentData.off_time) * 100);
+			}
+
+			let t_width = ((currentData.cycle_count / currentData.total_cycles) * 100);
+				
+			c_prog.css("width", c_width.toString() + "%");
+			t_prog.css("width", t_width.toString() + "%");
+			previous_run = true;
+		}
+	}
+	
+	window.requestAnimationFrame(updateText);
+}
+function updateText ()
+{
+	if (currentDataChanged != 0) {
+		if (currentData.running === false && previous_run === true) {
+			previous_run = false;
+			c_prog.css("width", "0%");
+			t_prog.css("width", "0%");
+			t_prec.html("---");
+			t_frac.html("-- / --");
+			stop_btn.addClass("disabled");
+			eta_el.html("");
+		} else if (currentData.running === true) {
+			if (previous_run === false)
+				stop_btn.dropClass("disabled");
+			let t_precent = Math.round((currentData.cycle_count / currentData.total_cycles) * 100);
+				
+			t_prec.html(t_precent.toString() + "%");
+			t_frac.html(currentData.cycle_count.toString() + " / " + currentData.total_cycles.toString());
+			previous_run = true;
+		}
+	}
+	
+	window.requestAnimationFrame(restFrame);
+}
+
+function updateETA() {
+	if (currentDataChanged != 0 && currentData.running === true) {
+		let d = new Date(Date.now() + ((currentData.total_cycles - currentData.cycle_count) * (currentData.on_time + currentData.off_time + 0.01) * 1000) - (currentData.current_time * 1000));
+		eta_el.html(d.toLocaleString());
+	}
+	
+	window.requestAnimationFrame(updateBars);
+}
+
+function restFrame() {
+	++rest_frame_count;
+	if (rest_frame_count > 3) {
+		rest_frame_count = 0;
+		window.requestAnimationFrame(updateETA);
+	} else {
+		window.requestAnimationFrame(restFrame);
+	}
+}
+
+window.requestAnimationFrame(restFrame);
+
+/*window.setTimeout(function () {
 	window.setInterval(function () {
 		if (currentData.running === true) {
 			_("#stop, #pause, #unpause").dropClass("disabled");
@@ -148,4 +316,4 @@ window.setTimeout(function () {
 		_("#t_prog").css("width",((currentData.cycle_count / currentData.total_cycles) * 100) + "%");
 
 	}, 50);
-}, 500);
+}, 500); */
