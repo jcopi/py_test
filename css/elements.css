@@ -146,6 +146,15 @@
     cursor:pointer;
     color:rgba(13,71,161, 1);
 }
+.button.mr {
+	margin:0 8px 0 0;
+}
+.button.disabled {
+	color:rgba(0,0,0, 0.5);
+}
 .button:hover {
     background-color:rgba(13,71,161, 0.1);
+}
+.button.disabled:hover {
+	background-color:transparent;
 }

@@ -41,6 +41,17 @@ h1 {
 	font:bold 16px/24px "Roboto", "Verdana", sans-serif;
 	color:#808080;
 }
+.card .actions {
+	height:60px; width:100%;
+	display:block; box-sizing:border-box;
+	padding:12px 24px; margin:0;
+	position:absolute; bottom:0; right:0;
+	font-size:0px;
+	color:#808080; text-align:right;
+}
+.card.collapsed .actions {
+	display:none;
+}
 .card .size_change {
 	height:36px; width:36px;
 	display:inline-block; box-sizing:border-box;
@@ -88,5 +99,34 @@ h1 {
 	position:absolute; top:0;
 	background-color:#1565C0;
 	box-shadow:0 0 5px #2196F3;
+}
+
+.card .progress {
+	height:24px; width:100%;
+	display:inline-block;
+	background-color:rgba(0,0,0, 0.1);
+	border-radius:2px;
+	overflow:hidden;
+	margin-bottom:12px;
+}
+.card .progress_bar {
+	height:100%; width:0%;
+	display:inline-block; background-color:#2196f3;
+	border-radius:2px;
+	transition:width 50ms ease;
+}
+.card .big_number {
+	height:72px; width:100%;
+	display:inline-block; box-sizing:border-box;
+	padding:0 12px 0 0; margin:0;
+	font:bold 64px/70px "Roboto Mono", "Consolas", monospace;
+	color:rgba(0,0,0, 0.8); text-align:center
+}
+.card .small_number {
+	height:48px; width:100%;
+	display:inline-block; box-sizing:border-box;
+	padding:6px 0; margin:0;
+	font:bold 24px/36px "Roboto Mono", "Consolas", monospace;
+	color:rgba(0,0,0, 0.8); text-align:center
 }
 

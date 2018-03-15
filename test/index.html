@@ -30,7 +30,7 @@
 		<button type="submit" id="unpause">Unpause Test</button>
 		<button type="submit" id="stop">Stop Test</button>
 	</div>-->
-	<div class="card">
+	<div class="card" id="settings">
 		<div class="title">Settings</div>
 		<div class="size_change material-icon">keyboard_arrow_up</div>
 		<div class="line"></div>
@@ -47,6 +47,14 @@
 				<input type="text" id="total_cycles"/>
 				<span>Number of Cycles</span>
 			</div>
+			<div class="actions">
+				<!--<div class="button disabled" id="commit">Commit</div>-->
+				<div class="button disabled" id="start">Start</div>
+				<span style="float:left">
+					<div class="button mr" id="def55">Use 5 and 5</div>
+					<div class="button mr" id="def19">Use 1 and 9</div>
+				</span>
+			</div>
 		</div><div class="column">
 			<div class="graph">
 				<div class="graph_v"></div>
@@ -56,10 +64,26 @@
 			</div>
 		</div>
 	</div><br/>
-	<div class="card collapsed">
+	<div class="card collapsed" id="status">
 		<div class="title">Status</div>
 		<div class="size_change material-icon">keyboard_arrow_down</div>
 		<div class="line"></div>
+		<div class="column">
+			<div class="progress">
+				<div class="progress_bar" id="t_prog"></div>
+			</div>
+			<div class="progress">
+				<div class="progress_bar" id="c_prog"></div>
+			</div>
+		</div><div class="column">
+			<div class="big_number" id="t_prec">---</div>
+			<div class="small_number" id="t_frac">---</div>
+		</div>
+		<div class="actions">
+			<div class="button disabled" id="stop">Stop</div>
+			<div class="button disabled" id="stop">Pause</div>
+			<div class="button disabled" id="stop">Unpause</div>
+		</div>
 	</div>
 	<script src="../js/lib-verbose.js"></script>
 	<script src="../js/elements.js"></script>
