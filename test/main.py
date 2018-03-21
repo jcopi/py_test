@@ -48,8 +48,15 @@ class Test(object):
             self.total_cycles = data["total_cycles"]
         if "cycle_count" in data:
             self.cycle_count = data["cycle_count"]
-        if "relay_number" in data:
-            self.relay_number = data["relay_number"]
+        # if "relay_number" in data:
+        #    self.relay_number = data["relay_number"]
+        if "command" in data:
+            if data["command"] == "stop":
+                self.do_stop()
+            elif data["command"] == "pause":
+                self.do_pause()
+            elif data["command"] == "unpause":
+                self.do_unpause()
 
     def push_data(self):
         return {
@@ -58,8 +65,8 @@ class Test(object):
             "total_cycles":self.total_cycles,
             "cycle_count":self.cycle_count,
             "state":self.state,
-            "current_time":self.current_time,
-            "relay_number":self.relay_number
+            "current_time":self.current_time#,
+            #"relay_number":self.relay_number
         }
     
     def do_pause(self):
@@ -71,11 +78,11 @@ class Test(object):
     def do_stop(self):
         self.cycle_count = self.total_cycles + 1
         
-def debug(self, name):
+def debug(name):
     if name == "relayon":
-        automationhat.relay[self.relay_number].on()
-    elif name == "relayoff":
-        automationhat.relay[self.relay_number].off()
+        automationhat.relay[0].on()
+    else:
+        automationhat.relay[0].off()
         
 
 def schedule(test, pipe, data, update_period):
@@ -83,19 +90,19 @@ def schedule(test, pipe, data, update_period):
     last_t = time.time()
 
     test_inst.initialize()
-    test_inst.accept_data(data)
+    test_inst.set_data(data)
 
     i = 0
     while not test_inst.is_finished():
-        test_inst.execute(time.time() - last_time)
+        test_inst.execute(time.time() - last_t)
         last_t = time.time()
         
         if pipe.poll():
-            test_inst.accept_data(pipe.recv())
+            test_inst.set_data(pipe.recv())
         time.sleep(0.02)
 
         if i >= update_period:
-            pipe.send(test_inst.push_data)
+            pipe.send(test_inst.push_data())
             i = 0
         else:
             i += 1
