@@ -8,20 +8,22 @@
 <body>
 	<h1>Endurance Test</h1>
 	<div id="not_running">
-		<div class="ul-input-wrapper">
+		<div class="ul-input-wrapper" style="width:200px;">
 			<input type="text" id="on_time"/>
 			<span>On Time</span>
 		</div>
-		<label for="on_time">On Time</label>
-		<input type="number" id="on_time"></br>
-		<label for="off_time">Off Time</label>
-		<input type="number" id="off_time"></br>
-		<label for="total_cycles">Number of Cycles</label>
-		<input type="number" id="total_cycles"></br>
+		<div class="ul-input-wrapper" style="width:200px;">
+			<input type="text" id="off_time"/>
+			<span>Off Time</span>
+		</div><br/>
+		<div class="ul-input-wrapper" style="width:200px;">
+			<input type="text" id="total_cycles"/>
+			<span>Number of Cycles</span>
+		</div>
 		<button type="submit" id="start">Start Test</button>
 	</div>
 	<div id="running" style="display:none">
-		Cycles: <span id="cycle_count"></span> / <span id="toal_cycles2"></span></br>
+		Cycles: <span id="cycle_count"></span> / <span id="total_cycles2"></span></br>
 		State:  <span id="state"></span>
 		<button type="submit" id="pause">Pause Test</button>
 		<button type="submit" id="unpause">Unpause Test</button>
@@ -29,5 +31,38 @@
 	</div>
 	<script src="../js/lib-verbose.js"></script>
 	<script src="../js/elements.js"></script>
+	<script>
+		function setRunning () {
+			_("#running").css({"display":"block"});
+			_("#not_running").css({"display":"none"});
+		}
+
+		function setNotRunning () {
+			_("#running").css({"display":"none"});
+			_("#not_running").css({"display":"block"});
+		}
+
+		function requestInfo () {
+			_.xhr("post", "info", function (data) {
+				var obj;
+				try {
+					obj = JSON.parse(data);
+					TestData = obj;
+					updateUI();
+					errorCount = 0;
+				} catch (ex) {
+					errorCount++;
+				}
+			});
+		}
+
+		function updateUI ()
+		{
+			return;
+		}
+
+		var TestData = {};
+		var errorCount = 0;
+	</script>
 </body>
 </html>
