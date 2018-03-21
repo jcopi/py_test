@@ -56,6 +56,10 @@ if __name__ == '__main__':
     config.default("author", "Joel Copi")
     config.default("test_name", "Endurance")
 
+    # This script will spawn multiple threads and processes for the efficient execution of the testing.
+    # The web server shall be spawned in it's own seperate thread and the test schedulaer shall spawn
+    # in a seperate thread as well
+
     print(config.get("test_name") + " Test loaded")
     test_proc = None
     test_data = {}
