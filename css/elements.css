@@ -1,0 +1,92 @@
+.ul-input-wrapper {
+    height:48px;
+    width:100%;
+    display:inline-block;
+    box-sizing:border-box;
+    position:relative;
+    padding:12px 6px 6px 6px;
+    font-size:0;
+    margin:6px 0;
+    vertical-align:top;
+}
+.ul-input-wrapper::before,
+.ul-input-wrapper::after {
+    content:"";
+    height:2px;
+    width:calc(100% - 12px);
+    display:block;
+    position:absolute;
+    bottom:4px;
+    left:6px;
+    background-color:rgba(0,0,0, 0.2);
+}
+.ul-input-wrapper.dark::before,
+.ul-input-wrapper.dark::after {
+    background-color:rgba(255,255,255, 0.4);
+}
+.ul-input-wrapper::after {
+    background-color:transparent;
+    transform:scaleX(0);
+    transition:background-color 0s linear 0.4s, transform 0.4s ease; 
+}
+.ul-input-wrapper.focus::after {
+    background-color:#2169f3;
+    transform:scaleX(1);
+    transition:background-color 0s linear 0s, transform 0.4s ease; 
+}
+.ul-input-wrapper.dark.focus::after {
+    background-color:rgba(255,255,255, 0.9);
+}
+.ul-input-wrapper input {
+    height:30px;
+    width:100%;
+    display:inline-block;
+    box-sizing:border-box;
+    padding:0 2px;
+    margin:0;
+    outline:none;
+    border:none;
+    background-color:transparent;
+    color:black;
+    font:normal 14px/30px "Roboto", sans-serif;
+}
+.ul-input-wrapper.dark input {
+    color:white;
+}
+.ul-input-wrapper span {
+    height:30px;
+    width:auto;
+    display:inline-block;
+    box-sizing:border-box;
+    padding:0 2px;
+    margin:0;
+    color:rgba(0,0,0, 0.6);
+    font:bold 12px/30px "Roboto", sans-serif;
+    text-transform:uppercase;
+    position:absolute;
+    bottom:6px;
+    left:6px;
+    transition:top 0.4s ease, height 0.3s ease 0.1s, font 0.3s ease 0.1s;
+}
+.ul-input-wrapper.dark span {
+    color:rgba(255,255,255, 0.5);
+}
+.ul-input-wrapper.focus span,
+.ul-input-wrapper.full span,
+.ul-input-wrapper.full.focus span {
+    height:12px;
+    font:bold 10px/12px "Roboto", sans-serif;
+    color:#2169f3;
+    top:0px;
+    left:6px;
+    transition:top 0.4s ease, height 0.3s ease 0s, font 0.3s ease 0s;
+}
+.ul-input-wrapper.dark.focus span {
+    color:rgba(255,255,255, 0.9);
+}
+.ul-input-wrapper.full span {
+    color:rgba(0,0,0, 0.6);
+}
+.ul-input-wrapper.dark.full span {
+    color:rgba(255,255,255, 0.5);
+}
