@@ -2,7 +2,7 @@ import sys
 import os
 import json
 
-from test.main import Test
+from test import main as tester
 
 from settings import Settings
 from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHandler
@@ -16,23 +16,37 @@ class Req(SimpleHTTPRequestHandler):
         content = self.rfile.read(content)                # Gets the posted data itself
         
         if self.path == "getinfo":
-            pass
+            obj = test_data
+            obj["running"] = True if test_proc != None else False
+            output = json.dumps(test_data)
         elif self.path == "setinfo":
-            pass
+            try:
+                in_dict = json.loads(content)
+            except:
+                output = json.dumps({"success":False})
+            else:
+                test_data.update(in_dict)
+                if test_pipe:
+                    test_pipe.send(test_data)
+                output = json.dumps({"success":True})
         elif self.path == "start":
-            pass
+            test_pipe, client_pipe = Pipe()
+            test_proc = mp.Process(target=tester.schedule, args=(tester.Test, child_pipe, test_data, ))
         elif self.path == "stop":
             pass
         elif self.path == "pause":
             pass
         elif self.path == "unpause":
             pass
+        elif self.path == "debug":
+            tester.debug(content)
+            output()
         
 
         self.send_headers("Content-Type", "application/json")
         self.end_headers()
 
-        self.wfile.write(bytes(json.dumps({"success":True}), "utf-8"))
+        self.wfile.write(bytes(output, "utf-8"))
         return
 
 if __name__ == '__main__':
@@ -42,10 +56,12 @@ if __name__ == '__main__':
     config.default("author", "Joel Copi")
     config.default("test_name", "Endurance")
 
-    print(config.get("test_name") + "Test loaded")
+    print(config.get("test_name") + " Test loaded")
+    test_proc = None
+    test_data = {}
 
     httpd = HTTPServer(('', 80), Req)
-    server_proc = mp.Process(target=httpd.serve_forever)
+    server_proc = mp.Thread(target=httpd.serve_forever)
     server_proc.start()
 
     print("autoup script started")

@@ -36,6 +36,7 @@ class Test(object):
         return self.cycle_count > self.total_cycles
     
     def end(self):
+        self.cycle_count = 0
         automationhat.relay[self.relay_number].off()
 
     def set_data(self, data):
@@ -61,20 +62,48 @@ class Test(object):
             "relay_number":self.relay_number
         }
     
-    def test(self, name):
-        if name == "relayon":
-            automationhat.relay[self.relay_number].on()
-        elif name == "relayoff":
-            automationhat.relay[self.relay_number].off()
-    
     def do_pause(self):
         self.paused = True
         
     def do_unpause(self):
         self.paused = True
+    
+    def do_stop(self):
+        self.cycle_count = self.total_cycles + 1
+        
+def debug(self, name):
+    if name == "relayon":
+        automationhat.relay[self.relay_number].on()
+    elif name == "relayoff":
+        automationhat.relay[self.relay_number].off()
+        
+
+def schedule(test, pipe, data, update_period):
+    test_inst = test()
+    last_t = time.time()
+
+    test_inst.initialize()
+    test_inst.accept_data(data)
+
+    i = 0
+    while not test_inst.is_finished():
+        test_inst.execute(time.time() - last_time)
+        last_t = time.time()
+        
+        if pipe.poll():
+            test_inst.accept_data(pipe.recv())
+        time.sleep(0.02)
+
+        if i >= update_period:
+            pipe.send(test_inst.push_data)
+            i = 0
+        else:
+            i += 1
+
+    test_inst.end()
 
 if __name__ == '__main__':
-    test_inst = EnduranceTest()
+    test_inst = Test()
     test_inst.initialize()
 
     last_t = time.time()
