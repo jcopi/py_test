@@ -50,13 +50,6 @@ class Test(object):
             self.cycle_count = data["cycle_count"]
         # if "relay_number" in data:
         #    self.relay_number = data["relay_number"]
-        if "command" in data:
-            if data["command"] == "stop":
-                self.do_stop()
-            elif data["command"] == "pause":
-                self.do_pause()
-            elif data["command"] == "unpause":
-                self.do_unpause()
 
     def push_data(self):
         return {

@@ -17,6 +17,11 @@ class Scheduler(object):
         self.test_paused = threading.Event()
         self.test_unpaused = threading.Event()
 
+        # Some flags are useful for returning state information to 
+        # parent processes
+        self.flag_lock = threading.Lock()
+        self.flag_running = False
+
         # An internal dict will store the data associated with the test
         self.test_data = {}
         self.data_lock = threading.Lock()
@@ -53,6 +58,13 @@ class Scheduler(object):
     def unpause_test(self):
         self.test_unpaused.set()
 
+    def is_running(self):
+        self.flag_lock.acquire()
+        result = self.flag_running
+        self.flag_lock.release()
+
+        return result
+
     def _run(self):
         self.test_added.wait()
         self.test_added.clear()
@@ -60,6 +72,9 @@ class Scheduler(object):
         while True:
             self.test_started.wait()
             self.test_started.clear()
+            self.flag_lock.acquire()
+            self.flag_running = True
+            self.flag_lock.release()
 
             last_t = time.time()
             while not self.test_inst.is_finished():
@@ -83,6 +98,9 @@ class Scheduler(object):
                 
                 time.sleep(max(0, 0.02 - (time.time() - last_t)))
             self.test_inst.end()
+            self.flag_lock.acquire()
+            self.flag_running = False
+            self.flag_lock.release()
             self.test_completed.set()
 
     
