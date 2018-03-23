@@ -130,3 +130,22 @@
 .ul-input-wrapper.dark.full span {
     color:rgba(255,255,255, 0.5);
 }
+
+.button {
+    height:36px;
+    width:auto;
+    display:inline-block;
+    box-sizing:border-box;
+    padding:0 12px;
+    text-align:center;
+    text-transform:uppercase;
+    font:bold 12px/36px "Roboto", sans-serif;
+    border-radius:2px;
+    vertical-align:top;
+    margin:0 0 0 8px;
+    cursor:pointer;
+    color:rgba(13,71,161, 1);
+}
+.button:hover {
+    background-color:rgba(13,71,161, 0.1);
+}
