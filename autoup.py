@@ -85,19 +85,7 @@ class Req(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.end_headers()
         self.wfile.write(bytes(output, "utf-8"))
-        return
-
-def update_test_data(pipe):
-    global test_data
-    global test_lock
-    try:
-        obj = pipe.recv()
-        test_lock.acquire()
-        test_data.update(obj)
-        test_lock.release()
-    except EOFError:
-        return
-        
+        return    
 
 if __name__ == '__main__':
     # This case will be executed if this file is executed
@@ -107,7 +95,7 @@ if __name__ == '__main__':
     config.default("author", "Joel Copi")
     config.default("test_name", "Endurance")
 
-    # This script will spawn multiple threads and processes for the efficient execution of the testing.
+    # This script will spawn multiple threads for the efficient execution of the testing.
     # The web server shall be spawned in it's own seperate thread and the test schedulaer shall spawn
     # in a seperate thread as well
 
