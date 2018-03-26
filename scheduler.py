@@ -82,7 +82,7 @@ class Scheduler(object):
                     self.data_lock.release()
                     self.data_changed.clear()
                 if self.was_started:
-                    if self.loop_count >= 500:
+                    if self.loop_count >= 250:
                         self.loop_count = 0
                         automationhat.output.one.toggle()
                     else:
