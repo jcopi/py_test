@@ -67,9 +67,10 @@ class Req(SimpleHTTPRequestHandler):
                 print(e)
         elif self.path.endswith("version"):
             try:
-                version = subprocess.check_output("git describe --tags")
-                commit  = subprocess.check_output("git rev-parse HEAD")
-                output = json.dumps({"success":True, "error":None, "version":version, "commit": commit})
+                version = subprocess.check_output("git describe --tags", shell=True)
+                commit  = subprocess.check_output("git rev-parse HEAD", shell=True)
+                origin  = subprocess.check_output("git remote get-url origin", shell=True)
+                output  = json.dumps({"success":True, "error":None, "version":version.decode(), "commit": commit.decode(), "repo": origin})
             except Exception as e:
                 print(e)
                 output = json.dumps({"success":False, "error":str(e)});
