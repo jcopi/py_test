@@ -78,7 +78,7 @@ class Req(SimpleHTTPRequestHandler):
         elif self.path.endswith("shutdown"):
             try:
                 sync_stat = subprocess.check_output("sync", shell=True)
-                subprocess.call("sudo nohup shutdown -h now")
+                subprocess.call("sudo nohup shutdown -h now", shell=True)
             except Exception as e:
                 print(e)
                 output = json.dumps({"success":False, "error":str(e)});
