@@ -70,7 +70,7 @@ class Req(SimpleHTTPRequestHandler):
                 version = subprocess.check_output("git describe --tags", shell=True)
                 commit  = subprocess.check_output("git rev-parse HEAD", shell=True)
                 origin  = subprocess.check_output("git remote get-url origin", shell=True)
-                output  = json.dumps({"success":True, "error":None, "version":version.decode(), "commit": commit.decode(), "repo": origin})
+                output  = json.dumps({"success":True, "error":None, "version":version.decode(), "commit": commit.decode(), "repo": origin.decode()})
             except Exception as e:
                 print(e)
                 output = json.dumps({"success":False, "error":str(e)});

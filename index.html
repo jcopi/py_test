@@ -5,5 +5,30 @@
 </head>
 <body>
 	<a href="test/">Go to test page</a>
+	<div id="scview"><code>
+		Source Control Manager: git<br/>
+		repo: <span class="url"><a></a></span><br/>
+		version: <span class="ver"></span><br/>
+		commit: <span class="hash"></span><br/>
+	</code></div>
+	<script src="js/lib-verbose.js"></script>
+	<script>
+		_.xhr("post", "version", function (data) {
+			try {
+				var obj = JSON.parse(data);
+				if (obj.success === false)
+					throw obj.error;
+
+				obj.repo = obj.repo.replace(/\n$/, "");
+				obj.commit = obj.commit.replace(/\n$/, "");
+				obj.version = obj.version.replace(/\n$/, "");
+				_("#scview .url").child("a").attr("href", obj.repo).html(obj.repo);
+				_("#scview .ver").html(obj.version);
+				_("#scview .hash").html(obj.commit);
+			} catch (e) {
+				console.log(e, data);
+			}
+		});
+	</script>
 </body>
 </html>
