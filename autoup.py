@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import subprocess
 
 from test import main as testing
 from scheduler import Scheduler
@@ -64,6 +65,19 @@ class Req(SimpleHTTPRequestHandler):
                 output = gen_success
             except Exception as e:
                 print(e)
+        elif self.path.endswith("version"):
+            try:
+                version = subprocess.check_output("git describe --tags")
+                commit  = subprocess.check_output("git rev-parse HEAD")
+                output = json.dumps({"success":True, "error":None, "version":version, "commit": commit})
+            except Exception as e:
+                print(e)
+                output = json.dumps({"success":False, "error":str(e)});
+        elif self.path.endswith("fread"):
+            output = gen_success
+        elif self.path.endswith("fwrite"):
+            output = gen_success 
+
         
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
