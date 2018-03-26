@@ -75,6 +75,9 @@ h1 {
 	.card .column {
 		width:100%;
 	}
+	.card .big_number {
+		text-align:left;
+	}
 }
 .card .graph {
 	height:180px; width:calc(100% - 12px);
