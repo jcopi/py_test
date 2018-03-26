@@ -1,20 +1,37 @@
 <!doctype html>
 <html>
 <head>
-
+	<title>UL Codes Test Fixture</title>
+	<meta charset="utf-8"/>
+	<style>
+		body {
+			padding:25px;
+		}
+		.view {
+			padding:18px; border-radius:6px; background-color:rgba(0,0,0, 0.05);
+		}
+	</style>
 </head>
 <body>
 	<a href="test/" style="font-size:16px;">Go to test page</a><br/>
 	<h3 style="font-family:monospace">Software</h3>
-	<div id="scview"><code>
+	<div id="scview" class="view"><code>
 		Source Control Manager: git<br/>
 		repo: <span class="url"><a></a></span><br/>
 		version: <span class="ver"></span><br/>
 		commit: <span class="hash"></span><br/>
-		Revision Date: <span class="date"></span><br/><br/>
-	</code></div><br/>
+		Revision Date: <span class="date"></span><br/>
+		Dependencies [backend]:<br/>
+		 - hostapd<br/>
+		 - dnsmasq<br/>
+		 - python3 (always preinstalled on Raspbian)<br/>
+		 - python3-automationhat (typically preinstalled on Raspbian)<br/>
+		Dependencies [frontend]:<br/>
+		 - <a href="https://github.com/jcopi/selector.git">JavaScript Selector Library</a>
+		 - <a href="https://material.io/icons">Google Material Icons</a>
+	</code></div>
 	<h3 style="font-family:monospace">Hardware</h3>
-	<div id="hwview"><code>
+	<div id="hwview" class="view"><code>
 		Hardware Components: <br/>
 		 - Raspberry Pi<br/>
 		 - Pimoroni Automation Hat<br/>
