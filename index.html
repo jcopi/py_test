@@ -3,6 +3,7 @@
 <head>
 	<title>UL Codes Test Fixture</title>
 	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="css/elements.css"/>
 	<style>
 		body {
 			padding:25px;
@@ -34,6 +35,8 @@
 		 - Raspberry Pi<br/>
 		 - Pimoroni Automation Hat<br/>
 	</code></div>
+	<h3 style="font-family:monospace">Controls</h3>
+	<div id="shutdown" class="button"></div>
 	<script src="js/lib-verbose.js"></script>
 	<script>
 		_.xhr("post", "version", function (data) {
@@ -53,6 +56,9 @@
 			} catch (e) {
 				console.log(e, data);
 			}
+		});
+		_("#shutdown").on("click", function () {
+			_.xhr("post", "shutdown", console.log);
 		});
 	</script>
 </body>
