@@ -75,6 +75,13 @@ class Req(SimpleHTTPRequestHandler):
             except Exception as e:
                 print(e)
                 output = json.dumps({"success":False, "error":str(e)});
+        elif self.path.endswith("shutdown"):
+            try:
+                sync_stat = subprocess.check_output("sync", shell=True)
+                subprocess.call("sudo nohup shutdown -h now")
+            except Exception as e:
+                print(e)
+                output = json.dumps({"success":False, "error":str(e)});
         elif self.path.endswith("fread"):
             output = gen_success
         elif self.path.endswith("fwrite"):
