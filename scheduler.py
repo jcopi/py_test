@@ -1,11 +1,14 @@
 import time
 import threading
+import automationhat
 
 class Scheduler(object):
     def __init__(self):
         self.child_thread = None
         self.started = True
         self.test = None
+        self.was_started = False
+        self.loop_count = 0
 
         # Events will be used for synchronization
         self.test_added = threading.Event()
@@ -29,6 +32,7 @@ class Scheduler(object):
     def start(self):
         self.child_thread = threading.Thread(target=self._run)
         self.child_thread.start()
+        automationhat.output.one.on()
 
     def set_test(self, test_class):
         self.test = test_class
@@ -77,8 +81,15 @@ class Scheduler(object):
                     self.test_inst.set_data(self.test_data)
                     self.data_lock.release()
                     self.data_changed.clear()
+                if self.was_started:
+                    if self.loop_count >= 500:
+                        self.loop_count = 0
+                        automationhat.output.one.toggle()
+                    else:
+                        self.loop_count += 10
                 time.sleep(0.01)
             print("Test Started")
+            self.was_started = True
             self.test_started.clear()
             self.flag_lock.acquire()
             self.flag_running = True
@@ -105,6 +116,12 @@ class Scheduler(object):
                 if self.test_unpaused.is_set():
                     self.test_inst.do_unpause()
                     self.test_unpaused.clear()
+                    
+                if self.loop_count >= 1000:
+                    self.loop_count = 0
+                    automationhat.output.one.toggle()
+                else:
+                    self.loop_count += 20
                 
                 time.sleep(max(0, 0.02 - (time.time() - last_t)))
             self.test_inst.end()
