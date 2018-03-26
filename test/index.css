@@ -1,7 +1,8 @@
 body, html {
 	height:100%; width:100%;
 	margin:0; padding:0;
-	overflow:hidden;
+	overflow-x:hidden;
+	overflow-y:auto;
 	background:linear-gradient(45deg, #E3F2FD, #ECEFF1, #FFF);
 	text-align:center;
 }
@@ -14,10 +15,6 @@ h1 {
 	font:bold 18px/24px "Roboto", "Verdana", sans-serif;
 	color:rgba(0,0,0, 0.8); text-transform:uppercase;
 	text-align:left;
-}
-
-#status {
-
 }
 
 .card {
@@ -73,6 +70,11 @@ h1 {
 	width:50%; height:auto;
 	display:inline-block; box-sizing:border-box;
 	vertical-align:top;
+}
+@media (max-width: 500px) {
+	.card .column {
+		width:100%;
+	}
 }
 .card .graph {
 	height:180px; width:calc(100% - 12px);
