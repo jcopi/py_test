@@ -14,7 +14,8 @@
 	</style>
 </head>
 <body>
-	<a href="test/" style="font-size:16px;">Go to test page</a><br/>
+	<!--<a href="test/" style="font-size:16px;">Go to test page</a><br/>-->
+	<div class="button" id="test">Start Pressure Endurance Test</div>
 	<h3 style="font-family:monospace">Software</h3>
 	<div id="scview" class="view"><code>Source Control Manager: git<br/>
 		repo: <span class="url"><a></a></span><br/>
@@ -35,6 +36,7 @@
 		 - Raspberry Pi<br/>
 		 - Pimoroni Automation Hat<br/>
 	</code></div>
+	<img src="diagram.png"/>
 	<h3 style="font-family:monospace">Controls</h3>
 	<div id="shutdown" class="button">Shutdown</div>
 	<script src="js/lib-verbose.js"></script>
@@ -59,6 +61,9 @@
 		});
 		_("#shutdown").on("click", function () {
 			_.xhr("post", "shutdown", console.log);
+		});
+		_("#test").on("click", function () {
+			window.location.href = "test/";
 		});
 	</script>
 </body>
