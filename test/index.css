@@ -12,7 +12,7 @@ h1 {
 	margin:0; padding:8px 20px;
 	display:block; box-sizing:border-box;
 	background-color:#FFF; box-shadow:0 2px 3px rgba(0,0,0, 0.3);
-	font:bold 18px/24px "Roboto", "Verdana", sans-serif;
+	font:bold 32px/48px "Roboto", "Verdana", sans-serif;
 	color:rgba(0,0,0, 0.8); text-transform:uppercase;
 	text-align:left;
 }
@@ -157,6 +157,8 @@ h1 {
 	color:#808080;
 }
 #eta {
-	font:normal 18px/1em "Roboto", sans-serif;
+	height:auto; width:100%;display:inline-block;
+	padding:6px 0 6px 24px;
+	font:normal 16px/1em "Roboto", sans-serif;
 }
 

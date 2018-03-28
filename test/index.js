@@ -280,7 +280,7 @@ function updateText ()
 function updateETA() {
 	if (currentDataChanged != 0 && currentData.running === true) {
 		let d = new Date(Date.now() + ((currentData.total_cycles - currentData.cycle_count) * (currentData.on_time + currentData.off_time + 0.01) * 1000) - (currentData.current_time * 1000));
-		eta_el.html(d.toLocaleString());
+		eta_el.html(d.toDateString() + "<br/>" + d.toLocaleTimeString());
 	}
 	
 	window.requestAnimationFrame(updateBars);
@@ -297,27 +297,3 @@ function restFrame() {
 }
 
 window.requestAnimationFrame(restFrame);
-
-/*window.setTimeout(function () {
-	window.setInterval(function () {
-		if (currentData.running === true) {
-			_("#stop, #pause, #unpause").dropClass("disabled");
-			if (currentData.state === true) {
-				_("#c_prog").css("width",(((currentData.current_time + ((Date.now() - currentDataChanged) / 1000)) / currentData.on_time) * 100) + "%");
-			} else {
-				_("#c_prog").css("width",(100-(((currentData.current_time + ((Date.now() - currentDataChanged) / 1000)) / currentData.off_time) * 100)) + "%");
-			}
-			
-			_("#t_prec").html(Math.round((currentData.cycle_count / currentData.total_cycles) * 100).toString() + "%");
-			_("#t_frac").html(currentData.cycle_count.toString() + " / " + currentData.total_cycles.toString());
-		} else {
-			_("#stop, #pause, #unpause").addClass("disabled");
-			_("#c_prog").css("width","0%");
-			_("#t_prec").html("---");
-			_("#t_frac").html("-- / --");
-		}
-		
-		_("#t_prog").css("width",((currentData.cycle_count / currentData.total_cycles) * 100) + "%");
-
-	}, 50);
-}, 500); */
