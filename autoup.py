@@ -100,9 +100,9 @@ class Req(SimpleHTTPRequestHandler):
         return 
 
 def input_handles():
-    in_one_last = automationhat.inputs.one.read()
+    in_one_last = automationhat.input.one.read()
     while True:
-        in_one_current = automationhat.inputs.one.read()
+        in_one_current = automationhat.input.one.read()
         if in_one_last == 0 and in_one_current == 1:
             testing.debug("toggle")
         in_one_last = in_one_current;
