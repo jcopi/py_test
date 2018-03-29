@@ -75,6 +75,8 @@ class Req(SimpleHTTPRequestHandler):
             except Exception as e:
                 print(e)
                 output = json.dumps({"success":False, "error":str(e)});
+        elif self.path.endswith("test_name"):
+            output = json.dumps({"success":True, "error":None, "name":config.get("test_name")})
         elif self.path.endswith("shutdown"):
             try:
                 sync_stat = subprocess.check_output("sync", shell=True)
@@ -100,7 +102,7 @@ if __name__ == '__main__':
     
     config = Settings("config.json", keepopen=False, autoupdate=True)
     config.default("author", "Joel Copi")
-    config.default("test_name", "Endurance")
+    config.default("test_name", "Dummy Test")
 
     # This script will spawn multiple threads for the efficient execution of the testing.
     # The web server shall be spawned in it's own seperate thread and the test schedulaer shall spawn
