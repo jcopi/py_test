@@ -129,5 +129,3 @@ class Scheduler(object):
             self.flag_running = False
             self.flag_lock.release()
             self.test_completed.set()
-
-    

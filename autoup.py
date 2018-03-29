@@ -10,6 +10,8 @@ from settings import Settings
 from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHandler
 import time
 
+import automationhat
+
 class Req(SimpleHTTPRequestHandler):
     def do_POST(self):
         # In this simple program
@@ -94,7 +96,16 @@ class Req(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.end_headers()
         self.wfile.write(bytes(output, "utf-8"))
-        return    
+        return 
+
+def input_handles():
+    in_one_last = automationhat.inputs.one.read()
+    while True:
+        in_one_current = automationhat.inputs.one.read()
+        if in_one_last == 0 and in_one_current == 1:
+            testing.debug("toggle")
+        in_one_last = in_one_current;
+        time.sleep(0.01)
 
 if __name__ == '__main__':
     # This case will be executed if this file is executed
@@ -114,8 +125,12 @@ if __name__ == '__main__':
     schd.start()
     schd.set_test(testing.Test)
 
+    in_handler = threading.Thread(target=input_handles)
+    in_handler.start()
+
     httpd = HTTPServer(('', 80), Req)
     httpd.serve_forever()
+    in_handler.join()
 
 
     
