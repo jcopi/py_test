@@ -77,8 +77,10 @@ class Test(object):
 def debug(name):
     if name == "relayon":
         automationhat.relay[0].on()
-    else:
+    elif name == "relayoff":
         automationhat.relay[0].off()
+    elif name == "toggle":
+        automationhat.relay[0].toggle()
         
 
 def schedule(test, pipe, data, update_period):
