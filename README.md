@@ -11,7 +11,8 @@ The test to be run shall be provided in a `Test` class accesible by importing th
 Name        | Input Types | Function                              
 ----------- | ----------- | --------------------------------------
 initialize  | None        | This method is called immediately before a test is started, it should reset all internal variables such that the class is ready to execute a test
-execute     | float       | This method is called repeatedly while a test is running. The calls to this method should be ~20ms apart, but a time since last call (in seconds) is passed to the method as the first argument at each call. **All actions necessary for the execution of a test should be performed by this function**
+execute     | float       | This method is called repeatedly while a test is running. The calls to this method should be ~20ms apart, but a time since last call (in seconds) is passed to the method as the first argument at each call. 
+**All actions necessary for the execution of a test should be performed by this function**
 is_finished | None        | This method is called repeatedly to determine if the loop running execute should continue. This function should return a boolean representing whether or not the test has completed, `True` indicating completion and `False` indicating not complete.
 end         | None        | This method is called immediately after the test has completed. No calls to execute or is_finished will happen after this call until another test is started. Internal state variables should be set such that the class is in an amiable idle state.
 set_data    | dict        | This method is called when the web server recieves a call to set test data. This is the function that should be used to populate necessary test parameters. A dict is passed in with the data intended to be set.
