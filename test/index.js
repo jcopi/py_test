@@ -181,7 +181,9 @@ _("#unpause").on("click", function () {
 		
 	});	
 });
-
+_("#more").on("click", function () {
+	_("#options").toggleClass("open");
+});
 function handleStartResult(result) {
 	try {
 		var obj = JSON.parse(result);
